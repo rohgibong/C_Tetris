@@ -1,0 +1,51 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.35.32215.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/users/rohgi/실습파일/c/_c언어프로젝트/main.c"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "55235d5f2d1959c92e62c65119a1a401dd5edaf4a5f4d83b5ac4bcd066c45e41"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/rohgi/실습파일/c/_c언어프로젝트/block.h"
+          },
+          "hashes": {
+            "sha-256": "318ce5714f7a9232f3c35fc05916db133ca7510b495cf6d106994c5fd03284c0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/rohgi/실습파일/c/_c언어프로젝트/screen.h"
+          },
+          "hashes": {
+            "sha-256": "de14c8d4ffec1fad0eaf42c41b87c4192f41f2ea3d2a2737d16dd0e98cef933f"
+          }
+        }
+      ]
+    }
+  ]
+}

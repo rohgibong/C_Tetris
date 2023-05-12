@@ -1,0 +1,265 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6386",
+          "message": {
+            "text": "'blockset'에 쓰는 동안 버퍼 오버런이 발생했습니다."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                },
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 5,
+                  "endLine": 89,
+                  "endColumn": 37
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "blockRand",
+                  "decoratedName": "blockRand",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 85,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 87,
+                            "startColumn": 9
+                          }
+                        },
+                        "message": {
+                          "text": "이 루프 시작, ('1' 가정)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 88,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "이 분기 시작, ('currentNum!=0' 가정)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 89,
+                            "startColumn": 26
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 90,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 90,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "이 루프 건너뛰기, ('i<currentNum'이(가) false라고 가정)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 95,
+                            "startColumn": 10
+                          }
+                        },
+                        "message": {
+                          "text": "이 분기 건너뛰기, ('i==currentNum'이(가) false라고 가정)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 87,
+                            "startColumn": 9
+                          }
+                        },
+                        "message": {
+                          "text": "이 루프 계속, ('1' 가정)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 88,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "'currentNum'은(는) NULL일 수 있습니다. (이 분기 시작)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+                          },
+                          "region": {
+                            "startLine": 89,
+                            "startColumn": 26
+                          }
+                        },
+                        "message": {
+                          "text": "'blockset[-1]'에 쓰기가 잘못됨, (쓰기 가능한 범위는 0에서 6 사이임)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.35.32215.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/rohgi/실습파일/C/_C언어프로젝트/block.c"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "af17a27c285ea4b60c6be451e49af9bc348377f6b792d7c73013e3637fba907e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/rohgi/실습파일/c/_c언어프로젝트/block.h"
+          },
+          "hashes": {
+            "sha-256": "318ce5714f7a9232f3c35fc05916db133ca7510b495cf6d106994c5fd03284c0"
+          }
+        }
+      ]
+    }
+  ]
+}
