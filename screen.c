@@ -1,4 +1,5 @@
 #include "screen.h"	//screen.h 헤더 파일을 프로그램에 포함시키기 위한 코드
+int score;
 
 void gotoxy(int x, int y) {//gotoxy : 커서 위치를 변경하여 화면 상에서 출력 위치를 이동시키는 함수
 	COORD pos = { x,y };	//gotoxy 함수 내부에서는 COORD 구조체를 사용하여 커서의 위치를 지정
@@ -68,7 +69,7 @@ int selectLevel() {
 		for (i = 0; i < 10; i++) {
 			if (kbhit()) {
 				int input = getch();
-				if (input == 13) {		//엔터키를 입력 했을 때
+				if (input == 13 || input == 32) {		//엔터키를 입력 했을 때
 					if (CursorS == 18) {
 						//PlaySound(TEXT("start.wav"), 0, SND_ASYNC);		//선택 효과음
 
@@ -339,10 +340,10 @@ void printGuideMent() {	//조작법을 보여주는 함수
 	printf("D");	//문구 출력
 	gotoxy(72, 25);		//72, 25 좌표이동
 	printf(": 오른쪽으로 회전");	//문구 출력
-	/*gotoxy(63, 27);
+	gotoxy(63, 27);
 	printf("SPACE");
 	gotoxy(72, 27);
-	printf(": 하드드랍");*/
+	printf(": 하드드랍");
 }
 
 int scanGameOver() {		//게임오버됐는지 체크하는 함수
@@ -391,7 +392,7 @@ void gameOverPage() {	//게임오버 됐을 때 출력하는 화면
 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);		//색상을 흰색으로 지정 (초기화)
 	gotoxy(42, 27);		//39, 25 좌표이동
-	printf("Your Score : 0");	//문구 출력	(점수구현 후 수정)
+	printf("Your Score : %d", score);	//최종 점수 출력
 
 	Sleep(2000);		//3초동안 지연
 

@@ -5,7 +5,11 @@
 int main() {
 	int speed;
 	int num = 0;
+	extern int score;
 	while (1) {
+		clock_t starttime = 0;
+		clock_t endtime = 0;
+		int speednum = 0;
 		num = startPage();
 		if (num == 1) {
 			speed = 30;
@@ -31,8 +35,11 @@ int main() {
 		changeac(blockRand());		//처음 대기 블럭 5개 지정 
 		changeac(blockRand());		//처음 대기 블럭 5개 지정 
 		changeac(blockRand());		//처음 대기 블럭 5개 지정 
-		changeac(blockRand());		//처음 대기 블럭 5개 지정 
+		changeac(blockRand());		//처음 대기 블럭 5개 지정
+		gotoxy(10, 7);
+		printf("SCORE : %d", score);
 
+		starttime = clock();
 		while (1) {		//게임이 실행되는 동안 무한으로 반복. 게임 종료 조건 만족 시 나가게 됨
 			currentBlock = setColor(playBlock);	//playBlock(활성화 된 블럭)을 setColor함수에 넣게되면 블럭 모양에 맞는 색깔 코드(정수)를 리턴하게됨. 그 수를 currentBlock에 저장
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentBlock);		//위에서 받은 색깔 코드를 통해 색 지정
@@ -40,7 +47,52 @@ int main() {
 			setGameBlock();			//현재 떨어지고 있는 테트리스 블록을 게임 화면에 추가하는 함수 호출
 			scanGameBlock();		//줄이 완성되었는지 확인하기 위한 함수 호출
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);	//색깔을 다시 흰색으로 되돌림
+			gotoxy(10, 7);
+			printf("SCORE : %d", score);
 
+			endtime = clock();
+			if (endtime - starttime >= 60000 && speednum == 0) {
+				if (num == 1) {
+					speed -= 5;
+				}
+				else if (num == 2) {
+					speed -= 5;
+				}
+				else if (num == 3) {
+					speed -= 2;
+				}
+				speednum++;
+				gotoxy(25, 7);
+				printf("Speed UP!");
+			}
+			else if (endtime - starttime >= 120000 && speednum == 1) {
+				if (num == 1) {
+					speed -= 5;
+				}
+				else if (num == 2) {
+					speed -= 5;
+				}
+				else if (num == 3) {
+					speed -= 2;
+				}
+				speednum++;
+				gotoxy(25, 7);
+				printf("Speed UP!!");
+			}
+			else if (endtime - starttime >= 180000 && speednum == 2) {
+				if (num == 1) {
+					speed -= 3;
+				}
+				else if (num == 2) {
+					speed -= 3;
+				}
+				else if (num == 3) {
+					speed -= 2;
+				}
+				speednum++;
+				gotoxy(25, 7);
+				printf("Speed UP!!!");
+			}
 			if (scanGameOver() == 1) {	//게임오버됐는지 확인하기 위한 함수 호출
 				break;		//게임오버가 됐으면 while문을 빠져나감
 			}

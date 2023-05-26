@@ -2,7 +2,12 @@
 
 int XSize = 18;			//x값을 설정하는 변수 XSize를 18으로 선언
 int YSize = 7;			//y값을 설정하는 변수 YSize를 7으로 선언
+int exx = 0;		//미리보기의 이전 x좌표
+int exy = 0;		//미리보기의 y좌표
+int exPlayBlock[4][4];
 int currentNum = 0;		//현재까지 출력된 블럭의 개수 표시
+int excurrent;
+int score;
 
 int yset() {	//y좌표 계산
 	if (YSize >= 7) {	//y좌표가 양수일 때
@@ -114,6 +119,71 @@ void removePrint(int arr[4][4]) {	//removePrint 함수 (잔상을 삭제하기 위한 함수)
 			}
 		}
 	}
+}
+
+void removeGuide(int arr[4][4], int a, int b) {
+	if (excurrent != currentNum) {
+		return;
+	}
+	for (int i = 0; i < 4; i++) {
+		gotoxy(a, b + i);
+		for (int j = 0; j < 4; j++) {
+			if (arr[i][j] == 1) {
+				printf("  ");
+			}
+			else if (arr[i][j] == 0) {
+				gotoxy(a + 2 * (j + 1), b + i);
+			}
+		}
+	}
+}
+
+void printGuide(int arr[4][4], int a) {
+	for (int i = 0; i < 4; i++) {
+		gotoxy(XSize, a + i);
+		for (int j = 0; j < 4; j++) {
+			if (arr[i][j] == 1) {
+				printf("□");
+			}
+			else if (arr[i][j] == 0) {
+				gotoxy(XSize + 2 * (j + 1), a + i);
+			}
+		}
+	}
+}
+
+int guideCheckDown() {
+	for (int i = 3; i >= 0; i--) {
+		for (int j = 0; j < 4; j++) {
+			if (playBlock[i][j] != 0 && gameblock[exy - 7 + 1 + i][(XSize - 10) / 2 + j] != 0) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+void guide() {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+
+	removeGuide(exPlayBlock, exx, exy);
+
+	exy = YSize;
+
+	while (guideCheckDown() == 0) {
+		exy++;
+	}
+
+	exx = XSize;
+	printGuide(playBlock, exy);
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			exPlayBlock[i][j] = playBlock[i][j];
+		}
+	}
+	excurrent = currentNum;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentBlock);
 }
 
 int blockCheckMoveLeft() {		//왼쪽으로 이동시 간섭 체크
@@ -511,7 +581,7 @@ void turnLeft() {		//turnLeft 함수 (왼쪽으로 회전하는 함수)
 	if (blockCheckTurn() == 1) {	//벽 간섭 체크해서 1이 리턴되면
 		calcTurnRight();		//원상복구
 	}
-	
+	guide();
 	printBlock(playBlock);		//회전된 모습 출력
 }
 
@@ -527,7 +597,7 @@ void turnRight() {		//turnRight 함수 (오른쪽으로 회전하는 함수)
 	if (blockCheckTurn() == 1) {	//벽 간섭 체크해서 1이 리턴되면
 		calcTurnLeft();		//원상복구
 	}
-
+	guide();
 	printBlock(playBlock);		//회전된 모습 출력
 }
 
@@ -535,6 +605,7 @@ void moveLeft() {		//moveLeft 함수 (왼쪽으로 이동하는 함수)
 	if (blockCheckMoveLeft() != 1) {	//왼쪽 벽에 간섭이 되지 않으면
 		removePrint(playBlock);	//잔상 삭제
 		XSize -= 2;				//x축 왼쪽 방향으로 2만큼 이동
+		guide();
 		printBlock(playBlock);	//이동한 자리에 출력
 	}
 }
@@ -543,6 +614,7 @@ void moveRight() {		//moveRight 함수 (오른쪽으로 이동하는 함수)
 	if (blockCheckMoveRight() != 1) {	//오른쪽 벽에 간섭이 되지 않으면
 		removePrint(playBlock);	//잔상 삭제
 		XSize += 2;				//x축 오른쪽 방향으로 2만큼 이동
+		guide();
 		printBlock(playBlock);	//이동한 자리에 출력
 	}
 }
@@ -552,11 +624,24 @@ int moveDown() {		//moveDown 함수 (밑으로 이동하는 함수)
 		removePrint(playBlock);	//잔상 삭제
 		YSize+=1;				//y축 방향으로 1만큼 이동
 		printBlock(playBlock);	//이동한 자리에 출력
+		score += 1;				//점수 1점 추가
 		return 0;	//0 리턴
 	}
 	else {	//간섭 시 (더이상 못 내려갈 시)
 		return 1;	//1 리턴
 	}
+}
+
+void goDown(int a) {
+	removePrint(playBlock);
+	while (blockCheckDown() == 0) {
+		YSize++;
+		if (a == 0) {
+			score += 2;
+		}
+	}
+	printBlock(playBlock);
+	return;
 }
 
 int keyBoard() {		//keyBoard 함수 (키보드 입력을 받는 함수)
@@ -586,9 +671,16 @@ int keyBoard() {		//keyBoard 함수 (키보드 입력을 받는 함수)
 		else if (key == 100) { //key 100(d키) 이면
 			turnRight();	   //오른쪽으로 돌기
 		}
-
+		else if (key == 32) {
+			goDown(0);
+			gotoxy(10, 32);
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
-	return 0;		//moveDown 실행 됐을때 외에 정상적으로 종료 시 0 리턴
+	//return 0;		//moveDown 실행 됐을때 외에 정상적으로 종료 시 0 리턴
 }
 
 void topgameline() {	//상단 경계선을 지정하는 함수
@@ -606,6 +698,7 @@ void moveBlock(int speed) {		//moveBlock 함수 (1초간격으로 블럭이 하강함)
 
 	moveDown();			//처음 블럭이 생성될때 블럭 위치를 조정하기 위해
 	moveDown();			//두번 아래로 실행
+	guide();
 	while (1) {			//계속 반복
 		for (int i = 0; i < speed; i++) {	//10ms씩 100번 반복 = 1초 간격으로 하강
 			if (_kbhit()) {				//키보드 입력이 있을 시
@@ -726,11 +819,28 @@ void printGameBlock() {		//줄이 완성되었을때 한줄 당기고 나머지 블럭들을 출력하�
 }
 
 void finishedGameBlock(int a) {		//줄이 완성되었을 때 호출하는 함수
+	int k = 0;
 	for (int i = a; i > 0; i--) {	//받아온 a값을 i에 넣고 i가 0보다 클 동안 반복하고 i를 1씩 빼기
 		for (int j = 1; j < 11; j++){	//j가 1부터 10번 반복
 			gameblock[i][j] = gameblock[i - 1][j];		//완성된 줄의 윗줄부터 하나씩 아랫줄로 이동 
+			k++;
 		}
 		printGameBlock();		//게임 화면 갱신
+	}
+	if (k == 0) {
+		return;
+	}
+	else if (k == 1) {
+		score += 100;
+	}
+	else if (k == 2) {
+		score += 300;
+	}
+	else if (k == 3) {
+		score += 500;
+	}
+	else {
+		score += 800;
 	}
 }
 
@@ -790,3 +900,4 @@ int setColor(int arr[4][4]) {	//블럭을 받아와서 그 블럭에 색깔을 입히기 위해 색�
 		return 13;		//보라색 코드인 13을 리턴
 	}
 }
+
