@@ -20,7 +20,7 @@ void printE(int x, int y) {		//메인 화면 E 출력
 	gotoxy(x, y + 3); printf("■  ");	//E를 만들기 위한 ■ 출력
 	gotoxy(x, y + 4); printf("■■■■");	//E를 만들기 위한 ■ 출력
 }
-void printR(int x, int y) {		//메인 화면 R 출력
+void printR(int x, int y) {		//메인,랭킹 화면 R 출력
 	gotoxy(x, y);     printf("■■■    ");	//R을 만들기 위한 ■ 출력
 	gotoxy(x, y + 1); printf("■    ■  ");	//R을 만들기 위한 ■ 출력
 	gotoxy(x, y + 2); printf("■■■ ");	//R을 만들기 위한 ■ 출력
@@ -43,6 +43,27 @@ void printS(int x, int y) {		//메인 화면 S 출력
 	gotoxy(x, y + 3); printf("        ■");	//S를 만들기 위한 ■ 출력
 	gotoxy(x, y + 4); printf("■■■■  ");	//S를 만들기 위한 ■ 출력
 }
+void printA(int x, int y) {		//랭킹 화면 A 출력
+	gotoxy(x, y);     printf("    ■■   ");	//A를 만들기 위한 ■ 출력
+	gotoxy(x, y + 1); printf("  ■    ■");	//A를 만들기 위한 ■ 출력
+	gotoxy(x, y + 2); printf("  ■■■■");	//A를 만들기 위한 ■ 출력
+	gotoxy(x, y + 3); printf("  ■    ■");	//A를 만들기 위한 ■ 출력
+	gotoxy(x, y + 4); printf("  ■    ■");	//A를 만들기 위한 ■ 출력
+}
+void printN(int x, int y) {		//메인 화면 N 출력
+	gotoxy(x, y);     printf("■      ■");	//N를 만들기 위한 ■ 출력
+	gotoxy(x, y + 1); printf("■■    ■");	//N를 만들기 위한 ■ 출력
+	gotoxy(x, y + 2); printf("■  ■  ■");	//N를 만들기 위한 ■ 출력
+	gotoxy(x, y + 3); printf("■    ■■");	//N를 만들기 위한 ■ 출력
+	gotoxy(x, y + 4); printf("■      ■");	//N를 만들기 위한 ■ 출력
+}
+void printK(int x, int y) {		//메인 화면 K 출력
+	gotoxy(x, y);     printf("■    ■ ");	//K를 만들기 위한 ■ 출력
+	gotoxy(x, y + 1); printf("■  ■");	//K를 만들기 위한 ■ 출력
+	gotoxy(x, y + 2); printf("■■");	//K를 만들기 위한 ■ 출력
+	gotoxy(x, y + 3); printf("■  ■");	//K를 만들기 위한 ■ 출력
+	gotoxy(x, y + 4); printf("■    ■");	//K를 만들기 위한 ■ 출력
+}
 
 void cursorview() {		//커서를 보이지 않게 하는 함수
 	CONSOLE_CURSOR_INFO cursorInfo = { 0, };		//커서의 속성 정보를 저장하는데 사용되는 구조체 변수 cursorInfo를 선언하고 초기화
@@ -51,43 +72,39 @@ void cursorview() {		//커서를 보이지 않게 하는 함수
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);		//SetConsoleCursorInfo 함수를 사용하여 커서의 정보를 설정
 }
 
-int selectLevel() {
-	int CursorS = 18;
-	int i = 0;
-	int num = 0;
-	gotoxy(39, 18);
-	printf("Easy");
-	gotoxy(39, 20);
-	printf("Normal");
-	gotoxy(39, 22);
-	printf("Hard");
-	gotoxy(39, 24);
-	printf("Exit");
-	gotoxy(36, 18);
-	printf(">>");
-	while (1) {
-		for (i = 0; i < 10; i++) {
-			if (kbhit()) {
-				int input = getch();
-				if (input == 13 || input == 32) {		//엔터키를 입력 했을 때
-					if (CursorS == 18) {
-						//PlaySound(TEXT("start.wav"), 0, SND_ASYNC);		//선택 효과음
-
-						for (i = 0; i < 5; i++) {		//선택시 반짝거림 
-							gotoxy(39, 18);
-							printf("        ");
-							Sleep(100);
-							gotoxy(39, 18);
-							printf("Easy");
-							Sleep(100);
+int selectLevel() {			//난이도 선택 함수 selectLevel
+	int CursorS = 18;		//커서의 y좌표 위치 18로 선언
+	int i = 0;				//반복문을 돌기 위한 정수 i 선언
+	int num = 0;			//'>>'를 찍기 위한 정수 num 선언
+	gotoxy(39, 18);			//39, 18 지점에
+	printf("Easy");			//Easy 문구 출력
+	gotoxy(39, 20);			//39, 18 지점에
+	printf("Normal");		//Normal 문구 출력
+	gotoxy(39, 22);			//39, 22 지점에
+	printf("Hard");			//Hard 문구 출력
+	gotoxy(39, 24);			//39, 24 지점에
+	printf("Exit");			//Exit 문구 출력
+	gotoxy(36, 18);			//36, 18 지점에
+	printf(">>");			//>> 문구 출력
+	while (1) {			//계속 반복
+		for (i = 0; i < 10; i++) {	//반짝이는걸 반복하기 위해 반복문을 추가
+			if (kbhit()) {		//키보드 입력을 받았을 때
+				int input = getch();	//input에 입력받은 키보드를 저장
+				if (input == 13 || input == 32) {		//엔터키, 스페이스바를 입력 했을 때
+					if (CursorS == 18) {	//커서의 y위치가 18일 경우
+						for (i = 0; i < 5; i++) {		//선택시 문구가 반짝거림
+							gotoxy(39, 18);			//39, 18 지점에
+							printf("        ");		//공백 출력
+							Sleep(100);				//100ms 대기 후
+							gotoxy(39, 18);			//39, 18 지점에
+							printf("Easy");			//Easy 문구 출력
+							Sleep(100);				//100ms 대기
 						}
-						system("cls");
-						return 1;
+						system("cls");			//화면 초기화
+						return 1;				//1 리턴
 					}
 
 					else if (CursorS == 20) {
-						/*PlaySound(TEXT("start.wav"), 0, SND_ASYNC);*/
-
 						for (i = 0; i < 5; i++) {		//선택시 반짝거림 
 							gotoxy(39, 20);
 							printf("       ");
@@ -101,8 +118,6 @@ int selectLevel() {
 					}
 
 					else if (CursorS == 22) {
-						/*PlaySound(TEXT("start.wav"), 0, SND_ASYNC);*/
-
 						for (i = 0; i < 5; i++) {		//선택시 반짝거림 
 							gotoxy(39, 22);
 							printf("      ");
@@ -146,7 +161,7 @@ int selectLevel() {
 					}
 				}
 			}
-			Sleep(10);
+			Sleep(10);	//10밀리초동안 스레드를 일시 정지 (반짝이는 효과를 추가하기 위해)
 		}
 
 		if (num == 0) {
@@ -164,6 +179,9 @@ int selectLevel() {
 }
 
 int startPage() {		//startPage 함수 (실행 첫 화면을 띄우기 위한 함수)
+	int CursorS = 21;		//커서의 y좌표 위치 21로 선언
+	int i = 0;				//반복문을 돌기 위한 정수 i 선언
+	int num = 0;			//'>>'를 찍기 위한 정수 num 선언
 	srand(time(NULL));	//srand를 사용하여 난수 발생기의 초기 시드 값을 설정하는 코드, 시드 값을 매번 다르게 설정함으로써 다양한 난수를 생성함
 	system("mode con cols=100 lines=41");	//Windows 운영체제에서 콘솔 창의 크기를 변경하는 명령, 가로 100칸, 세로 41칸으로 지정
 	cursorview();	//커서를 보이지 않게 하는 함수 호출
@@ -184,8 +202,14 @@ int startPage() {		//startPage 함수 (실행 첫 화면을 띄우기 위한 함수)
 	printS(80, 8);		//S 출력
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);		//색상을 흰색으로 지정 (초기화)
 
-	gotoxy(39, 25);		//39, 25 좌표이동
-	printf("Press any key to start");	//문구 출력
+	gotoxy(42, 21);		//42, 21 좌표이동
+	printf("1. 게임 시작");	//문구 출력
+	gotoxy(42, 24);		//42, 24 좌표이동
+	printf("2. 랭킹 확인");	//문구 출력
+	gotoxy(42, 27);		//42, 27 좌표이동
+	printf("3. 게임 종료");	//문구 출력
+	gotoxy(39, 21);			//39, 21 지점에
+	printf(">>");			//>> 문구 출력
 	gotoxy(80, 32);		//80, 32 좌표이동
 	printf("c응용 프로젝트");		//문구 출력
 	gotoxy(68, 33);		//68, 33 좌표이동
@@ -194,6 +218,69 @@ int startPage() {		//startPage 함수 (실행 첫 화면을 띄우기 위한 함수)
 	printf("1906125 노기봉");	//문구 출력
 	gotoxy(29, 38);		//29, 38 좌표이동
 	printf("영남이공대학교 Yeungnam University College");	//문구 출력
+
+	while (1) {			//계속 반복
+		for (i = 0; i < 10; i++) {	//반짝이는걸 반복하기 위해 반복문을 추가
+			if (kbhit()) {		//키보드 입력을 받았을 때
+				int input = getch();	//input에 입력받은 키보드를 저장
+				if (input == 13 || input == 32) {		//엔터키를 입력 했을 때
+					if (CursorS == 21) {	//커서의 y위치가 21일 경우
+						system("cls");			//화면 초기화
+						return(selectLevel());			//selectLevel로 가게 됨
+					}
+
+					else if (CursorS == 24) {
+						system("cls");			//화면 초기화
+						return 4;
+					}
+
+					else if (CursorS == 27) {
+						system("cls");			//화면 초기화
+						return 5;
+					}
+				}
+
+				else if (input == 224) {
+					input = getch();
+
+					switch (input) {
+					case 72: {		//방향키 위
+						gotoxy(39, CursorS);
+						printf("  ");
+						if (CursorS != 21)
+							CursorS = CursorS - 3;
+						else
+							CursorS = 27;
+						break;
+					}
+
+					case 80: {		//방향키 아래
+						gotoxy(39, CursorS);
+						printf("  ");
+						if (CursorS != 27)
+							CursorS = CursorS + 3;
+						else
+							CursorS = 21;
+						break;
+					}
+					}
+				}
+			}
+			Sleep(10);	//10밀리초동안 스레드를 일시 정지 (반짝이는 효과를 추가하기 위해)
+		}
+
+		if (num == 0) {
+			gotoxy(39, CursorS);
+			printf(">>");
+			num = 1;
+		}
+
+		else {
+			gotoxy(39, CursorS);
+			printf("  ");
+			num = 0;
+		}
+	}
 
 	getch();	//사용자가 키를 입력하는것을 받기 위해, 키를 입력받으면 밑 반복문 실행
 
@@ -391,15 +478,29 @@ void gameOverPage() {	//게임오버 됐을 때 출력하는 화면
 	
 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);		//색상을 흰색으로 지정 (초기화)
-	gotoxy(42, 27);		//39, 25 좌표이동
+	gotoxy(42, 27);		//42, 27 좌표이동
 	printf("Your Score : %d", score);	//최종 점수 출력
 
-	Sleep(2000);		//3초동안 지연
+	Sleep(2000);		//2초동안 지연
 
-	gotoxy(36, 30);		//39, 25 좌표이동
-	printf("Press any key to go to menu");	//문구 출력
+	int result = checkRank(score);
+	char id = ' ';
+	char initials[10];  // 최대 10개의 문자를 입력받을 수 있는 배열
 
-	while (kbhit()) getch();	//버퍼 초기화
-	getch();	//사용자가 키를 입력할때까지 대기
+	if (result == 1) {
+		while (kbhit()) getch();	//키보드 버퍼 지우기
+		gotoxy(44, 26);
+		printf("New Record!!!");
+		gotoxy(28, 32);
+		printf("랭킹에 등록할 이니셜을 입력해주세요: ");
+		scanf("%s", initials);  // 최대 9개의 문자를 입력받고, 마지막에 NULL 문자를 자동으로 추가
+		insertRank(initials, score);
+	}
+	else {
+		gotoxy(36, 30);
+		printf("Press any key to go to menu");
+		while (kbhit()) getch();
+		getch();
+	}
 
 }

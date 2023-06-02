@@ -680,7 +680,6 @@ int keyBoard() {		//keyBoard 함수 (키보드 입력을 받는 함수)
 			return 0;
 		}
 	}
-	//return 0;		//moveDown 실행 됐을때 외에 정상적으로 종료 시 0 리턴
 }
 
 void topgameline() {	//상단 경계선을 지정하는 함수
@@ -700,10 +699,10 @@ void moveBlock(int speed) {		//moveBlock 함수 (1초간격으로 블럭이 하강함)
 	moveDown();			//두번 아래로 실행
 	guide();
 	while (1) {			//계속 반복
-		for (int i = 0; i < speed; i++) {	//10ms씩 100번 반복 = 1초 간격으로 하강
+		for (int i = 0; i < speed; i++) {	//10ms씩 speed번 반복 = (10*speed) / 1000초 간격으로 하강
 			if (_kbhit()) {				//키보드 입력이 있을 시
 				if (keyBoard() == 1) {	//밑으로 이동하는 방향키 입력 받았을 때 (1을 리턴받았을 때)
-					continue;			//지연시간 초기화(다시 1초동안 기다려야 블럭이 아래로 내려감)
+					continue;			//지연시간 초기화(다시 n초동안 기다려야 블럭이 아래로 내려감)
 				}
 			}
 			topgameline();			//젤 윗줄 경계선 출력	
