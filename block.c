@@ -4,10 +4,10 @@ int XSize = 18;			//x값을 설정하는 변수 XSize를 18으로 선언
 int YSize = 7;			//y값을 설정하는 변수 YSize를 7으로 선언
 int exx = 0;		//미리보기의 이전 x좌표
 int exy = 0;		//미리보기의 y좌표
-int exPlayBlock[4][4];
+int exPlayBlock[4][4];	//이전블럭
 int currentNum = 0;		//현재까지 출력된 블럭의 개수 표시
-int excurrent;
-int score;
+int excurrent;		//전 블록이 저장된 위치
+int score;			//점수
 
 int yset() {	//y좌표 계산
 	if (YSize >= 7) {	//y좌표가 양수일 때
@@ -121,69 +121,69 @@ void removePrint(int arr[4][4]) {	//removePrint 함수 (잔상을 삭제하기 위한 함수)
 	}
 }
 
-void removeGuide(int arr[4][4], int a, int b) {
-	if (excurrent != currentNum) {
-		return;
+void removeGuide(int arr[4][4], int a, int b) {		//블록 가이드를 지우는 removeGuide 함수
+	if (excurrent != currentNum) {	// 이전 블록과 현재 블록이 같지 않으면
+		return;		//함수를 종료
 	}
-	for (int i = 0; i < 4; i++) {
-		gotoxy(a, b + i);
-		for (int j = 0; j < 4; j++) {
-			if (arr[i][j] == 1) {
-				printf("  ");
+	for (int i = 0; i < 4; i++) {	// 가이드 블록의 행을 순회
+		gotoxy(a, b + i);	// 출력할 블록의 위치로 이동
+		for (int j = 0; j < 4; j++) {	// 가이드 블록의 열을 순회
+			if (arr[i][j] == 1) {	// 현재 좌표에 블록이 있다면
+				printf("  ");	// 가이드를 지움
 			}
-			else if (arr[i][j] == 0) {
-				gotoxy(a + 2 * (j + 1), b + i);
-			}
-		}
-	}
-}
-
-void printGuide(int arr[4][4], int a) {
-	for (int i = 0; i < 4; i++) {
-		gotoxy(XSize, a + i);
-		for (int j = 0; j < 4; j++) {
-			if (arr[i][j] == 1) {
-				printf("□");
-			}
-			else if (arr[i][j] == 0) {
-				gotoxy(XSize + 2 * (j + 1), a + i);
+			else if (arr[i][j] == 0) {	// 현재 좌표에 블록이 없다면
+				gotoxy(a + 2 * (j + 1), b + i);	// 다음 좌표로 이동
 			}
 		}
 	}
 }
 
-int guideCheckDown() {
-	for (int i = 3; i >= 0; i--) {
-		for (int j = 0; j < 4; j++) {
-			if (playBlock[i][j] != 0 && gameblock[exy - 7 + 1 + i][(XSize - 10) / 2 + j] != 0) {
-				return 1;
+void printGuide(int arr[4][4], int a) {		//가이드 출력하는 printGuide함수
+	for (int i = 0; i < 4; i++) {	// 가이드 블록의 행을 순회
+		gotoxy(XSize, a + i);	// 출력할 블록 가이드의 위치로 이동
+		for (int j = 0; j < 4; j++) {	// 가이드 블록의 열을 순회
+			if (arr[i][j] == 1) {	// 현재 좌표에 블록이 있다면
+				printf("□");	// 블록을 출력
+			}
+			else if (arr[i][j] == 0) {	// 현재 좌표에 블록이 없다면
+				gotoxy(XSize + 2 * (j + 1), a + i);	// 다음 좌표로 이동
 			}
 		}
 	}
-	return 0;
 }
 
-void guide() {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+int guideCheckDown() {	// 아래로 이동 가능한지 확인하는 함수
+	for (int i = 3; i >= 0; i--) {		// 블록의 행을 역순으로 순회
+		for (int j = 0; j < 4; j++) {	// 블록의 열을 순회
+			if (playBlock[i][j] != 0 && gameblock[exy - 7 + 1 + i][(XSize - 10) / 2 + j] != 0) {	//아래로 이동할 공간이 없다면
+				return 1;	// 1을 반환하여 아래로 이동할 수 없음을 알림
+			}
+		}
+	}
+	return 0;	// 모든 조건을 만족하여 아래로 이동할 수 있다면 0을 반환
+}
 
-	removeGuide(exPlayBlock, exx, exy);
+void guide() {	// 다음 블록의 위치를 보여주는 가이드라인을 그리는 함수
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);	// 콘솔 텍스트의 색상을 흰색으로 설정
 
-	exy = YSize;
+	removeGuide(exPlayBlock, exx, exy);	// 이전에 그려진 가이드라인을 지우는 함수 호출
 
-	while (guideCheckDown() == 0) {
-		exy++;
+	exy = YSize;	// 현재 블록의 y위치를 exy에 저장
+
+	while (guideCheckDown() == 0) {	// 블록이 아래로 이동할 수 있는지 확인하는 함수를 호출, 이동 가능한 동안 반복
+		exy++;	// exy를 증가시켜 가이드라인을 아래로 이동
 	}
 
-	exx = XSize;
-	printGuide(playBlock, exy);
+	exx = XSize;	// 현재 블록의 X 위치를 exx에 저장
+	printGuide(playBlock, exy);		// 가이드라인을 화면에 출력하는 함수 호출
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {	// 2차원 배열 playBlock을 exPlayBlock에 복사
 		for (int j = 0; j < 4; j++) {
 			exPlayBlock[i][j] = playBlock[i][j];
 		}
 	}
-	excurrent = currentNum;
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentBlock);
+	excurrent = currentNum;	// 현재 블록 번호를 excurrent에 저장
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currentBlock);		// 콘솔 텍스트의 색상을 현재 블록 색상으로 변경
 }
 
 int blockCheckMoveLeft() {		//왼쪽으로 이동시 간섭 체크
@@ -632,15 +632,15 @@ int moveDown() {		//moveDown 함수 (밑으로 이동하는 함수)
 	}
 }
 
-void goDown(int a) {
-	removePrint(playBlock);
-	while (blockCheckDown() == 0) {
-		YSize++;
-		if (a == 0) {
-			score += 2;
+void goDown(int a) {	// 블록을 가능한 한 아래로 내리는 함수
+	removePrint(playBlock);		// 현재 블록의 출력을 지우는 함수 호출
+	while (blockCheckDown() == 0) {// 블록이 아래로 이동할 수 있는지 확인하는 함수를 호출, 이동 가능한 동안 반복
+		YSize++;	// YSize를 증가시켜 블록을 아래로 이동
+		if (a == 0) {	//a가 0 (하드드랍) 일경우
+			score += 2;		// 점수를 2 증가
 		}
 	}
-	printBlock(playBlock);
+	printBlock(playBlock);	// 블록을 화면에 출력하는 함수 호출
 	return;
 }
 
@@ -671,10 +671,10 @@ int keyBoard() {		//keyBoard 함수 (키보드 입력을 받는 함수)
 		else if (key == 100) { //key 100(d키) 이면
 			turnRight();	   //오른쪽으로 돌기
 		}
-		else if (key == 32) {
-			goDown(0);
-			gotoxy(10, 32);
-			return 1;
+		else if (key == 32) {	//key가 32(스페이스바) 이면
+			goDown(0);			//아래로 끝까지 내려감
+			gotoxy(10, 32);		//커서를 10, 32로 이동
+			return 1;		//1 리턴
 		}
 		else {
 			return 0;
@@ -826,20 +826,20 @@ void finishedGameBlock(int a) {		//줄이 완성되었을 때 호출하는 함수
 		}
 		printGameBlock();		//게임 화면 갱신
 	}
-	if (k == 0) {
-		return;
+	if (k == 0) {		//완성된 줄이 없을경우
+		return;			//리턴
 	}
-	else if (k == 1) {
-		score += 100;
+	else if (k == 1) {	//1줄이 완성된 경우
+		score += 100;	//점수 100점 추가
 	}
-	else if (k == 2) {
-		score += 300;
+	else if (k == 2) {	//2줄이 완성된 경우
+		score += 300;	//점수 300점 추가
 	}
-	else if (k == 3) {
-		score += 500;
+	else if (k == 3) {	//3줄이 완성된 경우
+		score += 500;	//점수 500점 추가
 	}
-	else {
-		score += 800;
+	else {				//4줄이 완성된 경우
+		score += 800;	//점수 800점 추가
 	}
 }
 
@@ -899,4 +899,3 @@ int setColor(int arr[4][4]) {	//블럭을 받아와서 그 블럭에 색깔을 입히기 위해 색�
 		return 13;		//보라색 코드인 13을 리턴
 	}
 }
-

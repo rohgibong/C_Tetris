@@ -104,58 +104,58 @@ int selectLevel() {			//난이도 선택 함수 selectLevel
 						return 1;				//1 리턴
 					}
 
-					else if (CursorS == 20) {
+					else if (CursorS == 20) {	//커서의 y위치가 20일 경우
 						for (i = 0; i < 5; i++) {		//선택시 반짝거림 
-							gotoxy(39, 20);
-							printf("       ");
-							Sleep(100);
-							gotoxy(39, 20);
-							printf("Normal");
-							Sleep(100);
+							gotoxy(39, 20);			//39, 20 지점에
+							printf("       ");		//공백 출력
+							Sleep(100);				//100ms 대기 후
+							gotoxy(39, 20);			//39, 20 지점에
+							printf("Normal");			//Normal 문구 출력
+							Sleep(100);				//100ms 대기
 						}
-						system("cls");
-						return 2;
+						system("cls");			//화면 초기화
+						return 2;				//1 리턴
 					}
 
-					else if (CursorS == 22) {
+					else if (CursorS == 22) {	//커서의 y위치가 22일 경우
 						for (i = 0; i < 5; i++) {		//선택시 반짝거림 
-							gotoxy(39, 22);
-							printf("      ");
-							Sleep(100);
-							gotoxy(39, 22);
-							printf("Hard");
-							Sleep(100);
+							gotoxy(39, 22);			//39, 22 지점에
+							printf("      ");		//공백 출력
+							Sleep(100);				//100ms 대기
+							gotoxy(39, 22);			//39, 22 지점에
+							printf("Hard");			//Hard 문구 출력
+							Sleep(100);				//100ms 대기
 						}
-						system("cls");
-						return 3;
+						system("cls");			//화면 초기화
+						return 3;				//3 리턴
 					}
 
-					else {
-						return 0;
+					else {		//그 외에
+						return 0;	//0 리턴
 					}
 				}
 
-				else if (input == 224) {
-					input = getch();
+				else if (input == 224) {	//방향키를 입력 받았을 때
+					input = getch();	// 다시 getch()를 호출하여 실제 방향키의 값을 받아옴
 
 					switch (input) {
-						case 72: {		//방향키 위
-							gotoxy(36, CursorS);
-							printf("  ");
-							if (CursorS != 18)
-								CursorS = CursorS - 2;
-							else
-								CursorS = 24;
+						case 72: {		//방향키 위 입력받았을 때
+							gotoxy(36, CursorS);    // 커서를 현재 위치로 이동
+							printf("  ");		//공백 출력
+							if (CursorS != 18)	// 현재 위치가 최상단이 아니라면
+								CursorS = CursorS - 2;	// 커서를 위로 2칸 이동
+							else	// 현재 위치가 최상단 이라면
+								CursorS = 24;	//커서를 최하단으로 이동
 							break;
 						}
 
-						case 80: {		//방향키 아래
-							gotoxy(36, CursorS);
-							printf("  ");
-							if (CursorS != 24)
-								CursorS = CursorS + 2;
-							else
-								CursorS = 18;
+						case 80: {		//방향키 아래 입력받았을 때
+							gotoxy(36, CursorS);    // 커서를 현재 위치로 이동
+							printf("  ");		//공백 출력
+							if (CursorS != 24)	// 현재 위치가 최하단이 아니라면
+								CursorS = CursorS + 2;	//커서를 아래로 2칸 이동
+							else	// 현재 위치가 최하단이라면
+								CursorS = 18;	//커서를 최상단으로 이동
 							break;
 						}
 					}
@@ -164,16 +164,16 @@ int selectLevel() {			//난이도 선택 함수 selectLevel
 			Sleep(10);	//10밀리초동안 스레드를 일시 정지 (반짝이는 효과를 추가하기 위해)
 		}
 
-		if (num == 0) {
-			gotoxy(36, CursorS);
-			printf(">>");
-			num = 1;
+		if (num == 0) {    //커서가 비활성화 상태일 경우
+			gotoxy(36, CursorS);    // 커서 위치로 이동
+			printf(">>");    // 커서를 화면에 표시
+			num = 1;    // 커서를 활성화 상태로 바꿈
 		}
 
-		else {
-			gotoxy(36, CursorS);
-			printf("  ");
-			num = 0;
+		else {    //커서가 활성화 상태일 경우
+			gotoxy(36, CursorS);    // 커서 위치로 이동
+			printf("  ");   // 화면에 표시된 커서를 지움
+			num = 0;    // 커서를 비활성화 상태로 바꿈
 		}
 	}
 }
@@ -229,38 +229,38 @@ int startPage() {		//startPage 함수 (실행 첫 화면을 띄우기 위한 함수)
 						return(selectLevel());			//selectLevel로 가게 됨
 					}
 
-					else if (CursorS == 24) {
+					else if (CursorS == 24) {	//커서의 y위치가 24일 경우
 						system("cls");			//화면 초기화
-						return 4;
+						return 4;		//4 리턴
 					}
 
-					else if (CursorS == 27) {
+					else if (CursorS == 27) {	//커서의 y위치가 27일 경우
 						system("cls");			//화면 초기화
-						return 5;
+						return 5;		//5 리턴
 					}
 				}
 
-				else if (input == 224) {
-					input = getch();
+				else if (input == 224) { // 방향키가 눌렸을 때
+					input = getch();	//input에 입력받은 키보드를 저장
 
 					switch (input) {
-					case 72: {		//방향키 위
-						gotoxy(39, CursorS);
-						printf("  ");
-						if (CursorS != 21)
-							CursorS = CursorS - 3;
-						else
-							CursorS = 27;
+					case 72: {		//위 방향키일때
+						gotoxy(39, CursorS); // 커서 위치로 이동
+						printf("  ");	// 화면에 표시된 커서를 지움
+						if (CursorS != 21)	// 만약 커서의 y 좌표가 21이 아니라면
+							CursorS = CursorS - 3;	// 커서의 y 좌표를 위로 이동
+						else	// 만약 커서의 y 좌표가 21이라면
+							CursorS = 27;	// 커서의 y 좌표를 최하단으로 이동
 						break;
 					}
 
-					case 80: {		//방향키 아래
-						gotoxy(39, CursorS);
-						printf("  ");
-						if (CursorS != 27)
+					case 80: {		//아래 방향키일때
+						gotoxy(39, CursorS); // 커서 위치로 이동
+						printf("  ");	// 화면에 표시된 커서를 지움
+						if (CursorS != 27)	// 만약 커서의 y 좌표가 27이 아니라면
 							CursorS = CursorS + 3;
-						else
-							CursorS = 21;
+						else	// 만약 커서의 y 좌표가 27이라면
+							CursorS = 21;	// 커서의 y 좌표를 최상단으로 이동
 						break;
 					}
 					}
@@ -269,16 +269,16 @@ int startPage() {		//startPage 함수 (실행 첫 화면을 띄우기 위한 함수)
 			Sleep(10);	//10밀리초동안 스레드를 일시 정지 (반짝이는 효과를 추가하기 위해)
 		}
 
-		if (num == 0) {
-			gotoxy(39, CursorS);
-			printf(">>");
-			num = 1;
+		if (num == 0) {		//커서가 비활성화 상태일 경우
+			gotoxy(39, CursorS);	// 커서 위치로 이동
+			printf(">>");	// 커서를 화면에 표시
+			num = 1;	// 커서를 활성화 상태로 바꿈
 		}
 
-		else {
-			gotoxy(39, CursorS);
-			printf("  ");
-			num = 0;
+		else {		//커서가 활성화 상태일 경우
+			gotoxy(39, CursorS);	// 커서 위치로 이동
+			printf("  ");	// 화면에 표시된 커서를 지움
+			num = 0;	// 커서를 비활성화 상태로 바꿈
 		}
 	}
 
@@ -483,24 +483,24 @@ void gameOverPage() {	//게임오버 됐을 때 출력하는 화면
 
 	Sleep(2000);		//2초동안 지연
 
-	int result = checkRank(score);
-	char id = ' ';
+	int result = checkRank(score);		//랭킹이 10위안에 드는지 아닌지 확인
+	char id = ' ';		//id입력받을 변수 선언
 	char initials[10];  // 최대 10개의 문자를 입력받을 수 있는 배열
 
-	if (result == 1) {
+	if (result == 1) {		//새로운 랭킹일 시에
 		while (kbhit()) getch();	//키보드 버퍼 지우기
-		gotoxy(44, 26);
-		printf("New Record!!!");
-		gotoxy(28, 32);
-		printf("랭킹에 등록할 이니셜을 입력해주세요: ");
+		gotoxy(44, 26);		//44, 26 위치에
+		printf("New Record!!!");	//문구 출력
+		gotoxy(28, 32);		//28, 32 위치에
+		printf("랭킹에 등록할 이니셜을 입력해주세요: ");	//랭킹 등록하라는 문구 출력
 		scanf("%s", initials);  // 최대 9개의 문자를 입력받고, 마지막에 NULL 문자를 자동으로 추가
-		insertRank(initials, score);
+		insertRank(initials, score);	//입력한 문자와 점수를 등록
 	}
 	else {
-		gotoxy(36, 30);
-		printf("Press any key to go to menu");
-		while (kbhit()) getch();
-		getch();
+		gotoxy(36, 30);		//36, 30 위치에
+		printf("Press any key to go to menu");	//문구 출력
+		while (kbhit()) getch();	//키보드 버퍼 지우기
+		getch();	//키보드 입력을 받을때 까지 대기
 	}
 
 }

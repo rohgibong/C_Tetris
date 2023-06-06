@@ -19,6 +19,6 @@ int playBlock[4][4];	//playBlock이름의 [4][4]크기 배열 생성 (활성화 되어 플레이 
 int blockset[7];		//현재까지 어떤 블럭이 사용되었는지 저장
 int blocksetprint[5][4][4];		//미리 보여 줄 5개의 블럭을 저장하는 배열 (4x4크기)
 int gameblock[25][12];		//게임화면에 블록이 있으면 1, 없으면 0을 담는 배열
-extern int score;
+extern int score;		//점수를 받을 변수 선언
 
 #endif	//조건부 컴파일 블럭의 끝을 나타내는 지시어

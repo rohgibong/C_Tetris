@@ -5,8 +5,8 @@
 #include <Windows.h> //Windows API 함수 사용
 #include <mysql.h>
 
-int checkRank(int score);
-void insertRank(char id[], int score);
-void showRank();
+int checkRank(int score);					//랭킹을 확인하는 함수 checkRank 선언
+void insertRank(char id[], int score);		//랭킹 등록하는 함수 insertRank 선언
+void showRank();							//10위까지의 랭킹을 보여주는 showRank 선언
 
 #endif	//조건부 컴파일 블럭의 끝을 나타내는 지시어

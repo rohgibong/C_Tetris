@@ -20,7 +20,7 @@ void guideWall();	//guideWall 함수 선언
 void printGuideMent();	//printGuideMent 함수 선언
 int scanGameOver();	 //scanGameOver 함수 선언
 void gameOverPage();	//gameOverPage 함수 선언
-extern int score;
+extern int score;		//점수를 받을 변수 선언
 
 extern int gameblock[25][12];		//게임화면에 블록이 있으면 1, 없으면 0을 담는 배열
 

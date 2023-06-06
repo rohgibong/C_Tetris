@@ -21,12 +21,12 @@ int main() {
 		else if (num == 3) {	//num(난이도)이 3일 때
 			speed = 10;			//speed에 10을 줌
 		}
-		else if (num == 4) {
-			showRank();
-			continue;
+		else if (num == 4) {	//랭킹 보기를 선택했을 때
+			showRank();			//랭크를 보여줌
+			continue;			//계속 반복
 		}
-		else if (num == 5) {	//num(난이도)이 3일 때
-			return 0;
+		else if (num == 5) {	//게임 종료를 선택했을 때
+			return 0;			//0 리턴
 		}
 		else {					//그 외에는
 			continue;			//계속 반복
