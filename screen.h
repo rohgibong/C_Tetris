@@ -2,7 +2,6 @@
 #define SCREEN	//SCREEN을 정의 (헤더파일이 중복해서 포함되는것을 방지하기 위해 ifndef을 사용)
 #include <stdio.h>	//standard input output (printf, scanf_s 등 사용)
 #include <Windows.h> //Windows API 함수 사용
-#include <stdio.h>	//standard input output (printf, scanf_s 등 사용)
 
 enum screenProperty {	//screen.c에서 사용 할 상수(화면의 크기)값을 정의
 	SCREEN_X_SIZE = 50,	//SCREEN_X_SIZE(화면 전체 x열)를 50으로 정의

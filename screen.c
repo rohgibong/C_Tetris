@@ -485,7 +485,7 @@ void gameOverPage() {	//게임오버 됐을 때 출력하는 화면
 
 	int result = checkRank(score);		//랭킹이 10위안에 드는지 아닌지 확인
 	char id = ' ';		//id입력받을 변수 선언
-	char initials[10];  // 최대 10개의 문자를 입력받을 수 있는 배열
+	char initials[30];  // 최대 30개의 문자를 입력받을 수 있는 배열
 
 	if (result == 1) {		//새로운 랭킹일 시에
 		while (kbhit()) getch();	//키보드 버퍼 지우기
